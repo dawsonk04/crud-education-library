@@ -69,8 +69,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.xml" />
+    <None Include="PostDeploy\DefaultData\DegreeTypes.sql" />
+    <None Include="PostDeploy\DefaultData\Programs.sql" />
+    <None Include="PostDeploy\DefaultData\Students.sql" />
+    <None Include="PostDeploy\DefaultData\Declarations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeploy\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeploy\Script.PostDeployment1.sql" />
   </ItemGroup>
 </Project>
