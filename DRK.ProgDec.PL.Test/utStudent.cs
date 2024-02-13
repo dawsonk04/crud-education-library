@@ -1,7 +1,7 @@
-namespace DRK.ProgDec.PL.Test
+﻿namespace DRK.ProgDec.PL.Test
 {
     [TestClass]
-    public class utProgram
+    public class utStudent
     {
         protected ProgDecEntities dc;
         protected IDbContextTransaction transaction;
@@ -29,7 +29,7 @@ namespace DRK.ProgDec.PL.Test
         [TestMethod]
         public void LoadTest()
         {
-            Assert.AreEqual(16, dc.tblPrograms.Count());
+            Assert.AreEqual(5, dc.tblStudents.Count());
 
 
 
@@ -42,13 +42,14 @@ namespace DRK.ProgDec.PL.Test
 
 
             // make entity
-            tblProgram entity = new tblProgram();
+            tblStudent entity = new tblStudent();
 
-            entity.DegreeTypeId = 2;
-            entity.Description = "basket weaving";
+            entity.FirstName = "hugo";
+            entity.LastName = "morgan";
+            entity.StudentID = "2352";
             entity.Id = -99;
             // add entity to DB
-            dc.tblPrograms.Add(entity);
+            dc.tblStudents.Add(entity);
 
             // commit changes
             int result = dc.SaveChanges();
@@ -59,11 +60,12 @@ namespace DRK.ProgDec.PL.Test
         [TestMethod]
         public void UpdateTest()
         {
-            // SELECT * FROM tblProgram - use the first one
-            tblProgram entity = dc.tblPrograms.FirstOrDefault();
+            // SELECT * FROM tblStudent - use the first one
+            tblStudent entity = dc.tblStudents.FirstOrDefault();
 
             // Change property values
-            entity.Description = "new description";
+            entity.FirstName = "hugo";
+            entity.LastName = "morgan";
 
             int result = dc.SaveChanges();
             Assert.IsTrue(result > 0);
@@ -73,15 +75,12 @@ namespace DRK.ProgDec.PL.Test
 
         public void DeleteTest()
         {
-            // SELECT * FROM tblProgram where id = 4
-            tblProgram entity = dc.tblPrograms.Where(e => e.Id == 4).FirstOrDefault();
+            // SELECT * FROM tblStudent where id = 4
+            tblStudent entity = dc.tblStudents.Where(e => e.Id == 4).FirstOrDefault();
 
-            dc.tblPrograms.Remove(entity);
+            dc.tblStudents.Remove(entity);
             int result = dc.SaveChanges();
             Assert.AreNotEqual(result, 0);
         }
-
-
-
     }
 }
