@@ -84,5 +84,13 @@
             Assert.AreNotEqual(result, 0);
         }
 
+        [TestMethod]
+
+        public void LoadByID()
+        {
+            tblDeclaration entity = dc.tblDeclarations.Where(e => e.Id == 2).FirstOrDefault();
+            Assert.AreEqual(entity.Id, 2);
+        }
+
     }
 }

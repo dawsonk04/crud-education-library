@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DRK.ProgDec.PL;
+﻿namespace DRK.ProgDec.PL;
 
 public partial class tblStudent
 {
@@ -11,5 +8,5 @@ public partial class tblStudent
 
     public string LastName { get; set; } = null!;
 
-    public string StudentID { get; set; } = null!;
+    public string StudentId { get; set; } = null!;
 }

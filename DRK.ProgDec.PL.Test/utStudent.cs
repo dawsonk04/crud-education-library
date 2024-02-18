@@ -46,7 +46,7 @@
 
             entity.FirstName = "hugo";
             entity.LastName = "morgan";
-            entity.StudentID = "2352";
+            entity.StudentId = "2352";
             entity.Id = -99;
             // add entity to DB
             dc.tblStudents.Add(entity);
@@ -81,6 +81,13 @@
             dc.tblStudents.Remove(entity);
             int result = dc.SaveChanges();
             Assert.AreNotEqual(result, 0);
+        }
+        [TestMethod]
+
+        public void LoadByID()
+        {
+            tblStudent entity = dc.tblStudents.Where(e => e.Id == 2).FirstOrDefault();
+            Assert.AreEqual(entity.Id, 2);
         }
     }
 }

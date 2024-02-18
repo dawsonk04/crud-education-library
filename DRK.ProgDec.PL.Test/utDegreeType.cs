@@ -80,5 +80,13 @@
             int result = dc.SaveChanges();
             Assert.AreNotEqual(result, 0);
         }
+
+        [TestMethod]
+
+        public void LoadByID()
+        {
+            tblDegreeType entity = dc.tblDegreeTypes.Where(e => e.Id == 2).FirstOrDefault();
+            Assert.AreEqual(entity.Id, 2);
+        }
     }
 }

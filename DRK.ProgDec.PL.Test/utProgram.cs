@@ -81,7 +81,13 @@ namespace DRK.ProgDec.PL.Test
             Assert.AreNotEqual(result, 0);
         }
 
+        [TestMethod]
 
+        public void LoadByID()
+        {
+            tblProgram entity = dc.tblPrograms.Where(e => e.Id == 2).FirstOrDefault();
+            Assert.AreEqual(entity.Id, 2);
+        }
 
     }
 }
