@@ -1,15 +1,64 @@
 ﻿using DRK.ProgDec.BL.Models;
 using DRK.ProgDec.PL;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DRK.ProgDec.BL
 {
     public static class StudentManager
     {
-        public static int Insert()
+        public static int Insert(string firstName, string lastName, string studentId, ref int id, bool rollback = false)
         {
             try
             {
-                return 0;
+                Student student = new Student
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    StudentId = studentId
+
+                };
+                int results = Insert(student, rollback);
+
+                // IMPORTANT - BACKFILL THE REF
+                id = student.ID;
+
+                return results;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public static int Insert(Student student, bool rollback = false)
+        {
+            try
+            {
+                int results = 0;
+                using (ProgDecEntities dc = new ProgDecEntities())
+                {
+                    IDbContextTransaction transaction = null;
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    tblStudent entity = new tblStudent();
+                    entity.Id = dc.tblStudents.Any() ? dc.tblStudents.Max(s => s.Id) + 1 : 1;
+                    entity.FirstName = student.FirstName;
+                    entity.LastName = student.LastName;
+                    entity.StudentId = student.StudentId;
+
+                    // IMPORTANT - BACK FILL THE ID
+                    student.ID = entity.Id;
+
+                    dc.tblStudents.Add(entity);
+                    results = dc.SaveChanges();
+
+
+                    if (rollback) transaction.Rollback();
+                }
+
+                return results;
             }
             catch (Exception)
             {
