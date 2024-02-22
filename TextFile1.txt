@@ -3,3 +3,5 @@ Install-Package Microsoft.EntityFrameworkCore.Tools -version 7.0.11
 Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design -version 7.0.10
 
 Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=DRK.ProgDec.DB;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Context ProgDecEntities -UseDatabaseNames -force
+
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=DRK.DVDCentral.DB;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Context ProgDecEntities -UseDatabaseNames -force

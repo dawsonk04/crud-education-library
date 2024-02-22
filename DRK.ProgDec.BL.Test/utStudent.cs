@@ -35,6 +35,22 @@ namespace DRK.ProgDec.BL.Test
             Assert.AreEqual(1, results);
         }
 
+        [TestMethod]
+        public void UpdateTest()
+        {
+            int result = 0;
+            Student student = StudentManager.LoadById(3);
+            student.FirstName = "test";
+            int results = StudentManager.Update(student, true);
+            Assert.AreEqual(1, results);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            int results = StudentManager.Delete(3, true);
+            Assert.AreEqual(1, results);
+        }
 
     }
 }

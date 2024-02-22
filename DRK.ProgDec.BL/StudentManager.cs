@@ -68,11 +68,35 @@ namespace DRK.ProgDec.BL
 
         }
 
-        public static int Update()
+        public static int Update(Student student, bool rollback = false)
         {
             try
             {
-                return 0;
+                int results = 0;
+                using (ProgDecEntities dc = new ProgDecEntities())
+                {
+                    IDbContextTransaction transaction = null;
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    // get the row we are trying to update
+                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == student.ID);
+
+                    if (entity != null)
+                    {
+                        entity.FirstName = student.FirstName;
+                        entity.LastName = student.LastName;
+                        entity.StudentId = student.StudentId;
+                        results = dc.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Row does not exist");
+                    }
+
+                    if (rollback) transaction.Rollback();
+                }
+                return results;
+
             }
             catch (Exception)
             {
@@ -83,11 +107,33 @@ namespace DRK.ProgDec.BL
 
         }
 
-        public static int Delete()
+        public static int Delete(int id, bool rollback = false)
         {
             try
             {
-                return 0;
+                int results = 0;
+                using (ProgDecEntities dc = new ProgDecEntities())
+                {
+                    IDbContextTransaction transaction = null;
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    // get the row we are trying to update
+                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == id);
+
+                    if (entity != null)
+                    {
+                        dc.tblStudents.Remove(entity);
+                        results = dc.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Row does not exist");
+                    }
+
+                    if (rollback) transaction.Rollback();
+                }
+                return results;
+
             }
             catch (Exception)
             {
@@ -102,8 +148,31 @@ namespace DRK.ProgDec.BL
         {
             try
             {
-                return null!;
+
+                using (ProgDecEntities dc = new ProgDecEntities())
+                {
+                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == id);
+                    if (entity != null)
+                    {
+                        return new Student
+                        {
+                            ID = entity.Id,
+                            FirstName = entity.FirstName,
+                            LastName = entity.LastName,
+                            StudentId = entity.StudentId
+                        };
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+
+                }
+
+
             }
+
             catch (Exception)
             {
 
