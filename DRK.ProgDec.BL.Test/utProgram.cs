@@ -16,7 +16,7 @@ namespace DRK.ProgDec.BL.Test
         public void InsertTest1()
         {
             int id = 0;
-            int results = ProgramManager.Insert("Test", ref id, true);
+            int results = ProgramManager.Insert("Test", 1, ref id, true);
             Assert.AreEqual(1, results);
         }
 
