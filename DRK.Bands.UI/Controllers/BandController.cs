@@ -1,4 +1,5 @@
-﻿using DRK.Bands.UI.Models;
+﻿using DRK.Bands.UI.Extensions;
+using DRK.Bands.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DRK.Bands.UI.Controllers
@@ -20,19 +21,37 @@ namespace DRK.Bands.UI.Controllers
 
         }
 
+        private void GetBands()
+        {
+            if (HttpContext.Session.GetObject<Band[]>("bands") != null)
+            {
+                bands = HttpContext.Session.GetObject<Band[]>("bands");
+
+            }
+            else
+            {
+                LoadBands();
+            }
+
+        }
+
+        private void SetBands()
+        {
+            HttpContext.Session.SetObject("bands", bands);
+        }
 
 
         // GET: BandController
         public ActionResult Index()
         {
-            LoadBands();
+            GetBands();
             return View(bands);
         }
 
         // GET: BandController/Details/5
         public ActionResult Details(int id)
         {
-            LoadBands();
+            GetBands();
 
             Band band = bands.FirstOrDefault(b => b.Id == id);
 
@@ -42,16 +61,27 @@ namespace DRK.Bands.UI.Controllers
         // GET: BandController/Create
         public ActionResult Create()
         {
-            return View();
+            Band band = new Band();
+            return View(band);
         }
 
         // POST: BandController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Band band)
         {
             try
             {
+                GetBands();
+                // resize the array
+                Array.Resize(ref bands, bands.Length + 1);
+
+                // calculate the new id value
+                band.Id = bands.Length;
+                bands[bands.Length - 1] = band;
+
+
+                SetBands();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -63,16 +93,27 @@ namespace DRK.Bands.UI.Controllers
         // GET: BandController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            GetBands();
+
+            Band band = bands.FirstOrDefault(b => b.Id == id);
+
+            return View(band);
         }
 
         // POST: BandController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Band band)
         {
             try
             {
+                GetBands();
+
+                bands[id - 1] = band;
+
+                SetBands();
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -84,7 +125,11 @@ namespace DRK.Bands.UI.Controllers
         // GET: BandController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            GetBands();
+
+            Band band = bands.FirstOrDefault(b => b.Id == id);
+
+            return View(band);
         }
 
         // POST: BandController/Delete/5
@@ -94,6 +139,13 @@ namespace DRK.Bands.UI.Controllers
         {
             try
             {
+                GetBands();
+
+                var newbands = bands.Where(b => b.Id != id);
+                bands = newbands.ToArray();
+
+                SetBands();
+
                 return RedirectToAction(nameof(Index));
             }
             catch
