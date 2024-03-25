@@ -73,6 +73,7 @@
     <None Include="PostDeploy\DefaultData\Programs.sql" />
     <None Include="PostDeploy\DefaultData\Students.sql" />
     <None Include="PostDeploy\DefaultData\Declarations.sql" />
+    <None Include="remote.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeploy\Script.PreDeployment1.sql" />
