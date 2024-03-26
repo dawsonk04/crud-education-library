@@ -161,6 +161,7 @@ namespace DRK.ProgDec.BL
                             ProgramID = entity.ProgramId,
                             StudentID = entity.StudentId,
                             ChangeDate = DateTime.Now
+
                         };
                     }
                     else
@@ -181,7 +182,7 @@ namespace DRK.ProgDec.BL
             }
         }
 
-        public static List<Declaration> Load()
+        public static List<Declaration> Load(int? programId = null)
         {
             try
             {
@@ -189,13 +190,22 @@ namespace DRK.ProgDec.BL
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    (from s in dc.tblDeclarations
+                    (from d in dc.tblDeclarations
+                     join s in dc.tblStudents on d.StudentId equals s.Id
+                     join p in dc.tblPrograms on d.ProgramId equals p.Id
+                     join dt in dc.tblDegreeTypes on p.DegreeTypeId equals dt.Id
+                     where d.ProgramId == programId || programId == null
                      select new
                      {
-                         s.Id,
-                         s.ProgramId,
-                         s.StudentId,
-                         s.ChangeDate
+                         d.Id,
+                         StudentName = s.FirstName + " " + s.LastName,
+                         ProgramName = p.Description,
+                         DegreeTypeName = dt.Description,
+
+                         d.ProgramId,
+                         d.StudentId,
+                         d.ChangeDate
+
                      })
                      .ToList()
                      .ForEach(declaration => list.Add(new Declaration
@@ -203,7 +213,10 @@ namespace DRK.ProgDec.BL
                          ID = declaration.Id,
                          ProgramID = declaration.ProgramId,
                          StudentID = declaration.StudentId,
-                         ChangeDate = DateTime.Now
+                         ChangeDate = DateTime.Now,
+                         StudentName = declaration.StudentName,
+                         ProgramName = declaration.ProgramName,
+                         DegreeTypeName = declaration.DegreeTypeName,
                      }));
                 }
 

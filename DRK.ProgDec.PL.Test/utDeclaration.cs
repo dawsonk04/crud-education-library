@@ -37,6 +37,25 @@
 
         [TestMethod]
 
+        public void LoadAllTest()
+        {
+            var declaration = (from d in dc.tblDeclarations
+                               join s in dc.tblStudents on d.StudentId equals s.Id
+                               join p in dc.tblPrograms on d.ProgramId equals p.Id
+                               join dt in dc.tblDegreeTypes on p.DegreeTypeId equals dt.Id
+                               select new
+                               {
+                                   d.Id,
+                                   StudentName = s.FirstName + " " + s.LastName,
+                                   ProgramName = p.Description,
+                                   DegreeTypeName = dt.Description
+
+                               }).ToList();
+            Assert.AreEqual(4, declaration.Count);
+        }
+
+        [TestMethod]
+
         public void InsertTest()
         {
 

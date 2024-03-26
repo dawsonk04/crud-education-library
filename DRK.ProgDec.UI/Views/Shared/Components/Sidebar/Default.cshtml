@@ -1,0 +1,13 @@
+﻿@model IEnumerable<DRK.ProgDec.BL.Models.Program>
+
+<ul>
+    @foreach(var program in Model)
+    {
+        <li>
+
+            <a asp-controller="Declaration"
+           asp-action="Browse">@program.Description</a>
+            
+        </li>
+    }
+</ul>
