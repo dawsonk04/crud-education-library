@@ -6,7 +6,9 @@
         <li>
 
             <a asp-controller="Declaration"
-           asp-action="Browse">@program.Description</a>
+           asp-action="Browse"
+
+            asp-route-id="@program.ID">@program.Description</a>
             
         </li>
     }

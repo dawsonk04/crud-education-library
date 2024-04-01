@@ -8,6 +8,12 @@ namespace DRK.ProgDec.UI.Controllers
         {
             return View(DeclarationManager.Load());
         }
+        // use in checkpoint 5
+        // filter the declaration by programId
+        public IActionResult Browse(int id)
+        {
+            return View(nameof(Index), DeclarationManager.Load(id));
+        }
 
         public IActionResult Details(int id)
         {
