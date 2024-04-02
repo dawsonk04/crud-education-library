@@ -6,16 +6,21 @@ namespace DRK.ProgDec.UI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Title = "List of all Programs";
             return View(ProgramManager.Load());
         }
 
         public IActionResult Details(int id)
         {
-            return View(ProgramManager.LoadById(id));
+            var item = ProgramManager.LoadById(id);
+            ViewBag.Title = "Details for " + item.Description;
+            return View(item);
         }
 
         public IActionResult Create()
         {
+            ViewBag.Title = "create program";
+
             return View();
         }
 
@@ -38,7 +43,9 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Edit(int id)
         {
-            return View(ProgramManager.LoadById(id));
+            var item = ProgramManager.LoadById(id);
+            ViewBag.Title = "Edit " + item.Description;
+            return View(item);
 
         }
 
@@ -60,7 +67,9 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Delete(int id)
         {
-            return View(ProgramManager.LoadById(id));
+            var item = ProgramManager.LoadById(id);
+            ViewBag.Title = "Delete";
+            return View(item);
 
         }
 

@@ -150,14 +150,26 @@ namespace DRK.ProgDec.BL
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblProgram entity = dc.tblPrograms.FirstOrDefault(s => s.Id == id);
+                    var entity = (from s in dc.tblPrograms
+                                  join dt in dc.tblDegreeTypes on s.DegreeTypeId equals dt.Id
+                                  where s.Id == id
+                                  select new
+                                  {
+                                      s.Id,
+                                      s.Description,
+                                      s.DegreeTypeId,
+                                      DegreeTypeName = dt.Description
+                                  })
+                                    .FirstOrDefault();
+
                     if (entity != null)
                     {
                         return new Program
                         {
                             ID = entity.Id,
                             Description = entity.Description,
-                            DegreeTypeID = entity.DegreeTypeId
+                            DegreeTypeID = entity.DegreeTypeId,
+                            DegreeTypeName = entity.DegreeTypeName
 
                         };
                     }
@@ -188,19 +200,21 @@ namespace DRK.ProgDec.BL
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
                     (from s in dc.tblPrograms
+                     join dt in dc.tblDegreeTypes on s.DegreeTypeId equals dt.Id
                      select new
                      {
                          s.Id,
                          s.Description,
-                         s.DegreeTypeId
+                         s.DegreeTypeId,
+                         DegreeTypeName = dt.Description
                      })
                      .ToList()
                      .ForEach(program => list.Add(new Program
                      {
                          ID = program.Id,
                          Description = program.Description,
-                         DegreeTypeID = program.DegreeTypeId
-
+                         DegreeTypeID = program.DegreeTypeId,
+                         DegreeTypeName = program.DegreeTypeName
                      }));
                 }
 
