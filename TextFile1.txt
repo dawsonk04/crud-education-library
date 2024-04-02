@@ -4,4 +4,6 @@ Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design -version 7.0.10
 
 Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=DRK.ProgDec.DB;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Context ProgDecEntities -UseDatabaseNames -force
 
+"Data Source=server-21295-300078204.database.windows.net;Inital Catalog=progdecdb;User ID=300078204db;Password=Test123! Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
+
 Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=DRK.DVDCentral.DB;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Context ProgDecEntities -UseDatabaseNames -force
