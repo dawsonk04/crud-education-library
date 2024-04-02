@@ -66,6 +66,11 @@ body {
     padding-right:0px;
 }
 
-.table tr:nth-child(odd) {
-    background-color:lightpink;
+.table th {
+    background-color: rgba(102,51,153,1);
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: rgba(102,51,153,.25);
 }

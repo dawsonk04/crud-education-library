@@ -44,12 +44,17 @@ namespace DRK.ProgDec.BL
                     entity.Id = dc.tblDegreeTypes.Any() ? dc.tblDegreeTypes.Max(s => s.Id) + 1 : 1;
                     entity.Description = degreeType.Description;
 
+                    foreach (Program program in degreeType.Programs)
+                    {
+                        // Set the orderId on tblorderItem
+                        results += ProgramManager.Insert(program, rollback);
+                    }
 
                     // IMPORTANT - BACK FILL THE ID
                     degreeType.ID = entity.Id;
 
                     dc.tblDegreeTypes.Add(entity);
-                    results = dc.SaveChanges();
+                    results += dc.SaveChanges();
 
 
                     if (rollback) transaction.Rollback();
@@ -153,7 +158,8 @@ namespace DRK.ProgDec.BL
                         return new DegreeType
                         {
                             ID = entity.Id,
-                            Description = entity.Description
+                            Description = entity.Description,
+                            Programs = ProgramManager.Load(entity.Id)
 
                         };
                     }
@@ -194,9 +200,10 @@ namespace DRK.ProgDec.BL
                      .ForEach(degreeType => list.Add(new DegreeType
                      {
                          ID = degreeType.Id,
-                         Description = degreeType.Description
+                         Description = degreeType.Description,
+                         Programs = ProgramManager.Load(degreeType.Id)
 
-                     }));
+                     })); ;
                 }
 
                 return list;

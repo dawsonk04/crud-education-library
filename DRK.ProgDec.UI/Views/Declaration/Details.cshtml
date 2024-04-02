@@ -1,33 +1,25 @@
 ﻿@model DRK.ProgDec.BL.Models.Declaration
 
 @{
-    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Declaration</h4>
-    <hr />
+<div class="m-2">
+    
     <dl class="row">
+       
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
+            @Html.DisplayNameFor(model => model.StudentName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID)
+            @Html.DisplayFor(model => model.StudentName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StudentID)
+            @Html.DisplayNameFor(model => model.ProgramName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StudentID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgramID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProgramID)
+            @Html.DisplayFor(model => model.ProgramName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ChangeDate)
@@ -37,7 +29,7 @@
         </dd>
     </dl>
 </div>
-<div>
+<div class="m-2">
     @Html.ActionLink("Edit", "Edit", new {  id = Model.ID }) |
     <a asp-action="Index">Back to List</a>
 </div>

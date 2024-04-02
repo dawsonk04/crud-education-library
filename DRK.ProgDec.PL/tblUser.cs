@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace DRK.ProgDec.PL;
 
-public partial class tblStudent
+public partial class tblUser
 {
     public int Id { get; set; }
+
+    public string UserId { get; set; } = null!;
 
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;
 
-    public string StudentID { get; set; } = null!;
+    public string Password { get; set; } = null!;
 }

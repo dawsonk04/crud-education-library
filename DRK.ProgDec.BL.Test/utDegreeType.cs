@@ -8,11 +8,21 @@ namespace DRK.ProgDec.BL.Test
         [TestMethod]
         public void LoadTest()
         {
+            List<DegreeType> items = DegreeTypeManager.Load();
             Assert.AreEqual(3, DegreeTypeManager.Load().Count);
+            Assert.AreEqual(9, items[2].Programs.Count);
         }
 
         [TestMethod]
 
+        public void LoadByIdTest()
+        {
+            var item = DegreeTypeManager.LoadById(1);
+            Assert.AreEqual(1, item.ID);
+            Assert.AreEqual(5, item.Programs.Count);
+
+        }
+        [TestMethod]
         public void InsertTest1()
         {
             int id = 0;

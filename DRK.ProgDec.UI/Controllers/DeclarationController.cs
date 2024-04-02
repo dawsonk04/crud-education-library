@@ -6,6 +6,7 @@ namespace DRK.ProgDec.UI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Title = "List of declarations";
             return View(DeclarationManager.Load());
         }
         // use in checkpoint 5
@@ -17,11 +18,14 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Details(int id)
         {
-            return View(DeclarationManager.LoadById(id));
+            var item = DeclarationManager.LoadById(id);
+            ViewBag.Title = "Details";
+            return View(item);
         }
 
         public IActionResult Create()
         {
+            ViewBag.Title = "Create";
             return View();
         }
 
@@ -44,7 +48,9 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Edit(int id)
         {
-            return View(DeclarationManager.LoadById(id));
+            var item = DeclarationManager.LoadById(id);
+            ViewBag.Title = "Edit";
+            return View(item);
 
         }
 
@@ -66,7 +72,9 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Delete(int id)
         {
-            return View(DeclarationManager.LoadById(id));
+            var item = DeclarationManager.LoadById(id);
+            ViewBag.Title = "Delete";
+            return View(item);
 
         }
 

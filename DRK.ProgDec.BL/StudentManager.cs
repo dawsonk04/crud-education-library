@@ -46,7 +46,7 @@ namespace DRK.ProgDec.BL
                     entity.Id = dc.tblStudents.Any() ? dc.tblStudents.Max(s => s.Id) + 1 : 1;
                     entity.FirstName = student.FirstName;
                     entity.LastName = student.LastName;
-                    entity.StudentId = student.StudentId;
+                    entity.StudentID = student.StudentId;
 
                     // IMPORTANT - BACK FILL THE ID
                     student.ID = entity.Id;
@@ -85,7 +85,7 @@ namespace DRK.ProgDec.BL
                     {
                         entity.FirstName = student.FirstName;
                         entity.LastName = student.LastName;
-                        entity.StudentId = student.StudentId;
+                        entity.StudentID = student.StudentId;
                         results = dc.SaveChanges();
                     }
                     else
@@ -159,7 +159,7 @@ namespace DRK.ProgDec.BL
                             ID = entity.Id,
                             FirstName = entity.FirstName,
                             LastName = entity.LastName,
-                            StudentId = entity.StudentId
+                            StudentId = entity.StudentID
                         };
                     }
                     else
@@ -194,7 +194,7 @@ namespace DRK.ProgDec.BL
                          s.Id,
                          s.FirstName,
                          s.LastName,
-                         s.StudentId
+                         s.StudentID
                      })
                      .ToList()
                      .ForEach(student => list.Add(new Student
@@ -202,7 +202,7 @@ namespace DRK.ProgDec.BL
                          ID = student.Id,
                          FirstName = student.FirstName,
                          LastName = student.LastName,
-                         StudentId = student.StudentId
+                         StudentId = student.StudentID
                      }));
                 }
 

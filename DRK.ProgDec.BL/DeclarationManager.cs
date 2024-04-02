@@ -152,7 +152,23 @@ namespace DRK.ProgDec.BL
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblDeclaration entity = dc.tblDeclarations.FirstOrDefault(s => s.Id == id);
+                    var entity = (from d in dc.tblDeclarations
+                                  join s in dc.tblStudents on d.StudentId equals s.Id
+                                  join p in dc.tblPrograms on d.ProgramId equals p.Id
+                                  join dt in dc.tblDegreeTypes on p.DegreeTypeId equals dt.Id
+                                  where d.Id == id
+                                  select new
+                                  {
+                                      d.Id,
+                                      StudentName = s.FirstName + " " + s.LastName,
+                                      ProgramName = p.Description,
+                                      DegreeTypeName = dt.Description,
+                                      d.ProgramId,
+                                      d.StudentId,
+                                      d.ChangeDate
+                                  })
+                                 .FirstOrDefault();
+
                     if (entity != null)
                     {
                         return new Declaration
@@ -160,8 +176,10 @@ namespace DRK.ProgDec.BL
                             ID = entity.Id,
                             ProgramID = entity.ProgramId,
                             StudentID = entity.StudentId,
-                            ChangeDate = DateTime.Now
-
+                            ChangeDate = DateTime.Now,
+                            StudentName = entity.StudentName,
+                            ProgramName = entity.ProgramName,
+                            DegreeTypeName = entity.DegreeTypeName
                         };
                     }
                     else
@@ -207,6 +225,8 @@ namespace DRK.ProgDec.BL
                          d.ChangeDate
 
                      })
+                     // Need this for checkpoint whatever
+                     .Distinct()
                      .ToList()
                      .ForEach(declaration => list.Add(new Declaration
                      {
