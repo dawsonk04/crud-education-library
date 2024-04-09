@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DRK.ProgDec.UI.Models;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DRK.ProgDec.UI.Controllers
 {
@@ -19,9 +21,17 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Title = "create program";
 
-            return View();
+            ViewBag.Title = "create program";
+            if (Authenticate.isAuthenticated(HttpContext))
+            {
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+            }
         }
 
         [HttpPost]

@@ -26,7 +26,7 @@ public partial class ProgDecEntities : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DRK.ProgDec.DB;Integrated Security=True");
-        //optionsBuilder.UseSqlServer("Data Source=server-35200-300078204.database.windows.net;Inital Catalog=progdecdb;User ID=300078204db;Password=Test123! Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        //optionsBuilder.UseSqlServer("Data Source=server-35200-300078204.database.windows.net;Initial Catalog=progdecdb;User ID=300078204db;Password=Test123!;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;");
 
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
