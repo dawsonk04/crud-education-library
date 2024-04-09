@@ -46,7 +46,7 @@
 
             entity.FirstName = "hugo";
             entity.LastName = "morgan";
-            entity.StudentID = "2352";
+            entity.StudentId = "2352";
             entity.Id = -99;
             // add entity to DB
             dc.tblStudents.Add(entity);
