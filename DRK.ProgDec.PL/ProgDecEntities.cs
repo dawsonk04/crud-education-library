@@ -78,7 +78,7 @@ public partial class ProgDecEntities : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.StudentID)
+            entity.Property(e => e.StudentId)
                 .HasMaxLength(10)
                 .IsUnicode(false);
         });
