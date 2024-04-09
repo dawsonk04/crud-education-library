@@ -1,5 +1,5 @@
 ﻿BEGIN
-	INSERT INTO tblStudent (Id, FirstName,LastName,StudentID)
+	INSERT INTO tblStudent (Id, FirstName,LastName,StudentId)
 	VALUES
 	(1,'Anakin','Skywalker','123456789'),
 	(2,'Percy','Jackson','113456789'),
