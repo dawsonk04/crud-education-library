@@ -10,6 +10,12 @@ namespace DRK.ProgDec.UI.Controllers
             return View();
         }
 
+        public IActionResult Seed()
+        {
+            UserManager.Seed();
+            return View();
+        }
+
         //private void GetUsers()
         //{
         //    if (HttpContext.Session.() != null)
