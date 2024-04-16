@@ -13,3 +13,5 @@ Post-Deployment Script Template
 :r ./DefaultData/Programs.sql
 :r ./DefaultData/Students.sql
 :r ./DefaultData/Declarations.sql
+:r ./DefaultData/Advisors.sql
+:r ./DefaultData/StudentAdvisors.sql

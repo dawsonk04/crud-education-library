@@ -15,3 +15,6 @@ drop table if exists tblProgram
 drop table if exists tblStudent
 drop table if exists tblDeclaration
 drop table if exists tblUser
+drop table if exists tblAdvisor
+drop table if exists tblStudentAdvisor
+
