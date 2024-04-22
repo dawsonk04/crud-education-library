@@ -46,6 +46,7 @@ namespace DRK.ProgDec.PL.Test
 
             entity.DegreeTypeId = 2;
             entity.Description = "basket weaving";
+            entity.ImagePath = "Test";
             entity.Id = -99;
             // add entity to DB
             dc.tblPrograms.Add(entity);

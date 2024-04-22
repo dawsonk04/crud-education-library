@@ -63,25 +63,41 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Edit(int id)
         {
-            var item = ProgramManager.LoadById(id);
-            ViewBag.Title = "Edit " + item.Description;
-            return View(item);
+
+            ProgramVM programVM = new ProgramVM();
+
+            programVM.Program = ProgramManager.LoadById(id);
+
+            programVM.DegreeTypes = DegreeTypeManager.Load();
+
+            ViewBag.Title = "edit " + programVM.Program.Description;
+
+
+            if (Authenticate.isAuthenticated(HttpContext))
+            {
+                return View(programVM);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+            }
 
         }
 
         [HttpPost]
 
-        public IActionResult Edit(int id, BL.Models.Program program, bool rollback = false)
+        public IActionResult Edit(int id, ProgramVM programVM, bool rollback = false)
         {
             try
             {
-                int result = ProgramManager.Update(program, rollback);
+                int result = ProgramManager.Update(programVM.Program, rollback);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View(program);
+                return View(programVM);
             }
         }
 

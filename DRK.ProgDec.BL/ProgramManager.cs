@@ -6,7 +6,7 @@ namespace DRK.ProgDec.BL
 {
     public static class ProgramManager
     {
-        public static int Insert(string description, int degreeTypeId, ref int id, bool rollback = false)
+        public static int Insert(string description, int degreeTypeId, string imagePath, ref int id, bool rollback = false)
         {
             try
             {
@@ -14,7 +14,7 @@ namespace DRK.ProgDec.BL
                 {
                     Description = description,
                     DegreeTypeID = degreeTypeId,
-
+                    ImagePath = imagePath
 
                 };
                 int results = Insert(program, rollback);
@@ -46,7 +46,7 @@ namespace DRK.ProgDec.BL
                     entity.Id = dc.tblPrograms.Any() ? dc.tblPrograms.Max(s => s.Id) + 1 : 1;
                     entity.Description = program.Description;
                     entity.DegreeTypeId = program.DegreeTypeID;
-
+                    entity.ImagePath = program.ImagePath;
 
                     // IMPORTANT - BACK FILL THE ID
                     program.ID = entity.Id;
@@ -85,6 +85,7 @@ namespace DRK.ProgDec.BL
                     {
                         entity.Description = program.Description;
                         entity.DegreeTypeId = program.DegreeTypeID;
+                        entity.ImagePath = program.ImagePath;
 
                         results = dc.SaveChanges();
                     }
@@ -159,7 +160,8 @@ namespace DRK.ProgDec.BL
                                       s.Id,
                                       s.Description,
                                       s.DegreeTypeId,
-                                      DegreeTypeName = dt.Description
+                                      DegreeTypeName = dt.Description,
+                                      s.ImagePath
                                   })
                                     .FirstOrDefault();
 
@@ -170,8 +172,8 @@ namespace DRK.ProgDec.BL
                             ID = entity.Id,
                             Description = entity.Description,
                             DegreeTypeID = entity.DegreeTypeId,
-                            DegreeTypeName = entity.DegreeTypeName
-
+                            DegreeTypeName = entity.DegreeTypeName,
+                            ImagePath = entity.ImagePath
                         };
                     }
                     else
@@ -208,7 +210,8 @@ namespace DRK.ProgDec.BL
                          s.Id,
                          s.Description,
                          s.DegreeTypeId,
-                         DegreeTypeName = dt.Description
+                         DegreeTypeName = dt.Description,
+                         s.ImagePath
                      })
                      .ToList()
                      .ForEach(program => list.Add(new Program
@@ -216,7 +219,8 @@ namespace DRK.ProgDec.BL
                          ID = program.Id,
                          Description = program.Description,
                          DegreeTypeID = program.DegreeTypeId,
-                         DegreeTypeName = program.DegreeTypeName
+                         DegreeTypeName = program.DegreeTypeName,
+                         ImagePath = program.ImagePath
                      }));
                 }
 

@@ -16,7 +16,7 @@ namespace DRK.ProgDec.BL.Test
         public void InsertTest1()
         {
             int id = 0;
-            int results = ProgramManager.Insert("Test", 1, ref id, true);
+            int results = ProgramManager.Insert("Test", 1, "Test", ref id, true);
             Assert.AreEqual(1, results);
         }
 
@@ -27,7 +27,9 @@ namespace DRK.ProgDec.BL.Test
             int result = 0;
             Program program = new Program
             {
-                Description = "Test"
+                DegreeTypeID = 1,
+                Description = "Test",
+                ImagePath = "Test"
             };
             int results = ProgramManager.Insert(program, true);
             Assert.AreEqual(1, results);

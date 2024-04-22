@@ -11,7 +11,7 @@
 <table class="table">
     <thead>
         <tr>
-           
+           <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.DegreeTypeName)
             </th>
@@ -24,7 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            
+            <td>
+                    <img src="~/images/@item.ImagePath" alt="@item.Description" id="programimage" onclick="on('/images/@item.ImagePath')" class="imagepropsmall" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DegreeTypeName)
             </td>
