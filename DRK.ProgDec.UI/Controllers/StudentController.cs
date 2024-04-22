@@ -6,16 +6,21 @@ namespace DRK.ProgDec.UI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Title = "List of students";
             return View(StudentManager.Load());
         }
 
         public IActionResult Details(int id)
         {
+            var item = StudentManager.LoadById(id);
+            ViewBag.Title = "Details for " + item.FullName;
+
             return View(StudentManager.LoadById(id));
         }
 
         public IActionResult Create()
         {
+            ViewBag.Title = "Create a student";
             return View();
         }
 
@@ -28,9 +33,10 @@ namespace DRK.ProgDec.UI.Controllers
                 int result = StudentManager.Insert(student);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                ViewBag.Title = "Create a program";
+                ViewBag.Error = ex.Message;
                 throw;
             }
 
@@ -38,6 +44,8 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Edit(int id)
         {
+
+
             return View(StudentManager.LoadById(id));
 
         }

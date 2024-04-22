@@ -13,7 +13,8 @@ namespace DRK.ProgDec.BL
                 Program program = new Program
                 {
                     Description = description,
-                    DegreeTypeID = degreeTypeId
+                    DegreeTypeID = degreeTypeId,
+
 
                 };
                 int results = Insert(program, rollback);

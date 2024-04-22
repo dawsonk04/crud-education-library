@@ -4,23 +4,21 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DRK.ProgDec.BL
 {
-    public static class StudentManager
+    public static class AdvisorManager
     {
-        public static int Insert(string firstName, string lastName, string studentId, ref int id, bool rollback = false)
+        public static int Insert(string name, ref int id, bool rollback = false)
         {
             try
             {
-                Student student = new Student
+                Advisor advisor = new Advisor
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    StudentId = studentId
+                    Name = name
 
                 };
-                int results = Insert(student, rollback);
+                int results = Insert(advisor, rollback);
 
                 // IMPORTANT - BACKFILL THE REF
-                id = student.ID;
+                id = advisor.Id;
 
                 return results;
             }
@@ -32,7 +30,7 @@ namespace DRK.ProgDec.BL
 
         }
 
-        public static int Insert(Student student, bool rollback = false)
+        public static int Insert(Advisor advisor, bool rollback = false)
         {
             try
             {
@@ -42,17 +40,17 @@ namespace DRK.ProgDec.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblStudent entity = new tblStudent();
-                    entity.Id = dc.tblStudents.Any() ? dc.tblStudents.Max(s => s.Id) + 1 : 1;
-                    entity.FirstName = student.FirstName;
-                    entity.LastName = student.LastName;
-                    entity.StudentId = student.StudentId;
+                    tblAdvisor entity = new tblAdvisor();
+                    entity.Id = dc.tblAdvisors.Any() ? dc.tblAdvisors.Max(s => s.Id) + 1 : 1;
+                    entity.Name = advisor.Name;
+
+
 
                     // IMPORTANT - BACK FILL THE ID
-                    student.ID = entity.Id;
+                    advisor.Id = entity.Id;
 
-                    dc.tblStudents.Add(entity);
-                    results = dc.SaveChanges();
+                    dc.tblAdvisors.Add(entity);
+                    results += dc.SaveChanges();
 
 
                     if (rollback) transaction.Rollback();
@@ -68,7 +66,7 @@ namespace DRK.ProgDec.BL
 
         }
 
-        public static int Update(Student student, bool rollback = false)
+        public static int Update(Advisor advisor, bool rollback = false)
         {
             try
             {
@@ -79,13 +77,12 @@ namespace DRK.ProgDec.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     // get the row we are trying to update
-                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == student.ID);
+                    tblAdvisor entity = dc.tblAdvisors.FirstOrDefault(s => s.Id == advisor.Id);
 
                     if (entity != null)
                     {
-                        entity.FirstName = student.FirstName;
-                        entity.LastName = student.LastName;
-                        entity.StudentId = student.StudentId;
+                        entity.Name = advisor.Name;
+
                         results = dc.SaveChanges();
                     }
                     else
@@ -118,11 +115,11 @@ namespace DRK.ProgDec.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     // get the row we are trying to update
-                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == id);
+                    tblAdvisor entity = dc.tblAdvisors.FirstOrDefault(s => s.Id == id);
 
                     if (entity != null)
                     {
-                        dc.tblStudents.Remove(entity);
+                        dc.tblAdvisors.Remove(entity);
                         results = dc.SaveChanges();
                     }
                     else
@@ -144,23 +141,21 @@ namespace DRK.ProgDec.BL
 
         }
 
-        public static Student LoadById(int id)
+        public static Advisor LoadById(int id)
         {
             try
             {
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblStudent entity = dc.tblStudents.FirstOrDefault(s => s.Id == id);
+                    tblAdvisor entity = dc.tblAdvisors.FirstOrDefault(s => s.Id == id);
                     if (entity != null)
                     {
-                        return new Student
+                        return new Advisor
                         {
-                            ID = entity.Id,
-                            FirstName = entity.FirstName,
-                            LastName = entity.LastName,
-                            StudentId = entity.StudentId,
-                            Advisors = AdvisorManager.Load(id)
+                            Id = entity.Id,
+                            Name = entity.Name,
+
                         };
                     }
                     else
@@ -180,31 +175,31 @@ namespace DRK.ProgDec.BL
                 throw;
             }
         }
-
-        public static List<Student> Load()
+        //editing or creating movie in DVDCentral
+        public static List<Advisor> Load(int studentId)
         {
             try
             {
-                List<Student> list = new List<Student>();
+                List<Advisor> list = new List<Advisor>();
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    (from s in dc.tblStudents
+                    (from s in dc.tblAdvisors
+                     join sa in dc.tblStudentAdvisors on s.Id equals sa.AdvisorId
+                     where sa.StudentId == studentId
                      select new
                      {
                          s.Id,
-                         s.FirstName,
-                         s.LastName,
-                         s.StudentId
+                         s.Name
+
                      })
                      .ToList()
-                     .ForEach(student => list.Add(new Student
+                     .ForEach(advisor => list.Add(new Advisor
                      {
-                         ID = student.Id,
-                         FirstName = student.FirstName,
-                         LastName = student.LastName,
-                         StudentId = student.StudentId
-                     }));
+                         Id = advisor.Id,
+                         Name = advisor.Name,
+
+                     })); ;
                 }
 
                 return list;
@@ -218,7 +213,39 @@ namespace DRK.ProgDec.BL
         }
 
 
+        public static List<Advisor> Load()
+        {
+            try
+            {
+                List<Advisor> list = new List<Advisor>();
 
+                using (ProgDecEntities dc = new ProgDecEntities())
+                {
+                    (from s in dc.tblAdvisors
+                     select new
+                     {
+                         s.Id,
+                         s.Name
+
+                     })
+                     .ToList()
+                     .ForEach(advisor => list.Add(new Advisor
+                     {
+                         Id = advisor.Id,
+                         Name = advisor.Name,
+
+                     })); ;
+                }
+
+                return list;
+            }
+
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
 
 
