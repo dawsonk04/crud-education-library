@@ -1,4 +1,7 @@
-﻿namespace DRK.ProgDec.PL;
+﻿using System;
+using System.Collections.Generic;
+
+namespace DRK.ProgDec.PL;
 
 public partial class tblStudent
 {
