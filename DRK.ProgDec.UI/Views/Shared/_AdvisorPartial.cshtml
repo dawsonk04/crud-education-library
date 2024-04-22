@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DRK.ProgDec.BL.Models.Advisor>
 
 <div>
-    <table class="table">
+    <table id="students" class="table data-table">
         <thead>
             <tr>
 
@@ -29,3 +29,13 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript" class="init" >
+    $.noConflicts();
+    jQuery(document).ready(function ($) {
+        $('#students').DataTable ({
+          "lengthMenu" : [[5,10,25,30,-1] [5,10,25,30, "All"]]
+        });
+    });
+
+</script>
