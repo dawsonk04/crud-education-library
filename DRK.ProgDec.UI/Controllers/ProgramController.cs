@@ -7,6 +7,16 @@ namespace DRK.ProgDec.UI.Controllers
 {
     public class ProgramController : Controller
     {
+        private readonly IWebHostEnvironment _host;
+
+        public ProgramController(IWebHostEnvironment host)
+        {
+            _host = host;
+        }
+
+
+
+
         public IActionResult Index()
         {
             ViewBag.Title = "List of all Programs";
@@ -63,18 +73,19 @@ namespace DRK.ProgDec.UI.Controllers
 
         public IActionResult Edit(int id)
         {
-
-            ProgramVM programVM = new ProgramVM();
-
-            programVM.Program = ProgramManager.LoadById(id);
-
-            programVM.DegreeTypes = DegreeTypeManager.Load();
-
-            ViewBag.Title = "edit " + programVM.Program.Description;
-
-
             if (Authenticate.isAuthenticated(HttpContext))
             {
+
+                ProgramVM programVM = new ProgramVM();
+
+                programVM.Program = ProgramManager.LoadById(id);
+
+                programVM.DegreeTypes = DegreeTypeManager.Load();
+
+                ViewBag.Title = "edit " + programVM.Program.Description;
+
+
+
                 return View(programVM);
 
             }
@@ -91,6 +102,23 @@ namespace DRK.ProgDec.UI.Controllers
         {
             try
             {
+                // process image
+
+                if (programVM.File != null)
+                {
+                    programVM.Program.ImagePath = programVM.File.FileName;
+
+                    string path = _host.WebRootPath + "\\images\\";
+
+                    using (var stream = System.IO.File.Create(path = programVM.File.FileName))
+                    {
+                        programVM.File.CopyTo(stream);
+                        ViewBag.Message = "File uploaded sucessfully";
+                    }
+
+                }
+
+
                 int result = ProgramManager.Update(programVM.Program, rollback);
                 return RedirectToAction(nameof(Index));
             }
