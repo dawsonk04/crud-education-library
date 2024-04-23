@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DRK.ProgDec.UI.Extensions;
+using DRK.ProgDec.UI.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DRK.ProgDec.UI.Controllers
 {
@@ -45,24 +47,58 @@ namespace DRK.ProgDec.UI.Controllers
         public IActionResult Edit(int id)
         {
 
+            StudentVM studentVM = new StudentVM(id);
 
-            return View(StudentManager.LoadById(id));
+            ViewBag.Title = "Edit " + studentVM.Student.FullName;
+
+            HttpContext.Session.SetObject("advisorids", studentVM.AdvisorIds);
+
+            return View(studentVM);
 
         }
 
         [HttpPost]
 
-        public IActionResult Edit(int id, Student student, bool rollback = false)
+        public IActionResult Edit(int id, StudentVM studentVM, bool rollback = false)
         {
             try
             {
-                int result = StudentManager.Update(student, rollback);
+                IEnumerable<int> newAdvisorIds = new List<int>();
+
+                if (studentVM.AdvisorIds != null)
+                    newAdvisorIds = studentVM.AdvisorIds;
+
+
+                IEnumerable<int> oldAdvisorIds = new List<int>();
+                oldAdvisorIds = GetObject();
+
+                IEnumerable<int> deletes = oldAdvisorIds.Except(newAdvisorIds);
+                IEnumerable<int> adds = newAdvisorIds.Except(oldAdvisorIds);
+
+                deletes.ToList().ForEach(d => StudentAdvisorManager.Delete(id, d));
+                adds.ToList().ForEach(a => StudentAdvisorManager.Insert(id, a));
+
+
+                int result = StudentManager.Update(studentVM.Student, rollback);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View(student);
+                return View(studentVM);
+            }
+        }
+
+        private IEnumerable<int> GetObject()
+        {
+            if (HttpContext.Session.GetObject<IEnumerable<int>>("advisorids") != null)
+            {
+                return HttpContext.Session.GetObject<IEnumerable<int>>("advisorids");
+
+            }
+            else
+            {
+                return null;
             }
         }
 
