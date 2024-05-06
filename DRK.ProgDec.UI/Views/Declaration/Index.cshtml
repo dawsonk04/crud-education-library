@@ -50,9 +50,17 @@
                 @Html.DisplayFor(modelItem => item.DegreeTypeName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID  }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID  }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID  })
+                
+                
+                <a class="btn btn-sm btn-primary" asp-route-id="@item.ID" asp-action="Edit">Edit</a>
+                <a class="btn btn-sm btn-primary" asp-route-id="@item.ID" asp-action="Details">Details</a>
+                <a class="btn btn-sm btn-primary" asp-route-id="@item.ID" asp-action="Delete">Delete</a>
+@*                <a class="btn btn-sm btn-primary" asp-route-id="@item.ID" asp-action="Add" asp-controller="ShoppingCart">+</a>
+            *@   <input class="btn btn-sm btn-primary"
+                    type="button"
+                    onclick="AddToCart(@item.ID)" value="+" />
+
+
             </td>
         </tr>
 }
