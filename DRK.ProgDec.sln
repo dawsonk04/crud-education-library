@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DRK.ProgDec.BL.Test", "DRK.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DRK.Bands.UI", "DRK.Bands.UI\DRK.Bands.UI.csproj", "{209FDB50-9736-4228-9CEE-8D9C665D8684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DRK.ProgDec.UI", "DRK.ProgDec.UI\DRK.ProgDec.UI.csproj", "{4074F8BC-685B-48AB-B3FB-4CF0D6E7BA20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DRK.ProgDec.UI", "DRK.ProgDec.UI\DRK.ProgDec.UI.csproj", "{4074F8BC-685B-48AB-B3FB-4CF0D6E7BA20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DRK.ProgDec.API", "DRK.ProgDec.API\DRK.ProgDec.API.csproj", "{B5AECAE5-7419-40B5-9B2F-FF331D2A7F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{4074F8BC-685B-48AB-B3FB-4CF0D6E7BA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4074F8BC-685B-48AB-B3FB-4CF0D6E7BA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4074F8BC-685B-48AB-B3FB-4CF0D6E7BA20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AECAE5-7419-40B5-9B2F-FF331D2A7F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AECAE5-7419-40B5-9B2F-FF331D2A7F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AECAE5-7419-40B5-9B2F-FF331D2A7F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AECAE5-7419-40B5-9B2F-FF331D2A7F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
