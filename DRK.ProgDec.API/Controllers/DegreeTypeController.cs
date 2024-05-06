@@ -34,7 +34,7 @@ namespace DRK.ProgDec.API.Controllers
             }
         }
 
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] BL.Models.DegreeType degreeType)
         {
             try
@@ -49,7 +49,7 @@ namespace DRK.ProgDec.API.Controllers
             }
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             try
